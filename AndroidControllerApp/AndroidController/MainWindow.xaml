@@ -1,0 +1,53 @@
+﻿<Window x:Class="AndroidController.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AndroidController"
+        mc:Ignorable="d"
+        Title="AndroidControllerServer" Height="450" Width="800"
+        Closing="Application_Exit">
+    <Grid>
+        <Label Content="Android Controller Server" HorizontalAlignment="Left" Height="36" Margin="317,21,0,364" VerticalAlignment="Center" Width="168"/>
+        <Button x:Name="ServerStatusButton" Content="Start Server" Click="ServerStatusButton_Click" HorizontalAlignment="Left" Height="23" Margin="57,104,0,0" VerticalAlignment="Top" Width="81"/>
+        <Label x:Name="ServerStatusLabel" Content="Server Inactive" HorizontalAlignment="Left" Height="23" Margin="138,104,0,0" VerticalAlignment="Top" Width="89"/>
+        <Label Content="Available Virtual Devices" HorizontalAlignment="Left" Margin="583,21,0,0" VerticalAlignment="Top" Height="27" Width="140"/>
+        <ListBox x:Name="DevicesListBox" HorizontalAlignment="Left" Height="52" Margin="583,48,0,0" VerticalAlignment="Top" Width="140"/>
+        <Label x:Name="VJoyStatusLabel" Content="vJoy Disabled" HorizontalAlignment="Left" Margin="57,44,0,0" VerticalAlignment="Top" Width="170"/>
+        <TextBox x:Name="IpAddressTextBox" HorizontalAlignment="Left" Height="20" Margin="374,73,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" IsReadOnlyCaretVisible="True"/>
+        <Label Content="Port:" HorizontalAlignment="Left" Height="28" Margin="300,98,0,0" VerticalAlignment="Top" Width="69"/>
+        <TextBox x:Name="PortTextBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Margin="374,104,0,0"/>
+        <Label Content="Devices&#xD;&#xA;" HorizontalAlignment="Left" Margin="57,135,0,0" VerticalAlignment="Top" Height="25"/>
+        <DataGrid x:Name="SocketGrid" HorizontalAlignment="Left" Height="218" Margin="57,160,0,0" VerticalAlignment="Top" Width="666" CanUserResizeRows="False" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Path=Num}"  Header="#" IsReadOnly="True"/>
+                <DataGridTextColumn Binding="{Binding Path=Name}" Header="Name" IsReadOnly="True"/>
+                <DataGridTemplateColumn Header="Device ID">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ComboBox HorizontalAlignment="Center" VerticalAlignment="Center" SelectedItem="{Binding Path=DeviceId}" SelectionChanged="DeviceIdColumn_Changed" ItemsSource="{Binding Path=DeviceIds, UpdateSourceTrigger=PropertyChanged}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Binding="{Binding Path=Status}" Header="Status" IsReadOnly="True"/>
+                <DataGridTemplateColumn  Header="Paused">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <CheckBox HorizontalAlignment="Center" VerticalAlignment="Center" Checked="IsPaused_Checked" Unchecked="IsPaused_Unchecked" IsChecked="{Binding Path=IsPaused, UpdateSourceTrigger=PropertyChanged}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn  Header="Remove Device">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Click="RemoveDevice_Clicked">Remove Device</Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Label Content="IP Address:" HorizontalAlignment="Left" Height="27" Margin="300,66,0,0" VerticalAlignment="Top" Width="69"/>
+        <Button Name="InstallVJoyButton" Content="Install vJoy" HorizontalAlignment="Left" Margin="57,75,0,0" VerticalAlignment="Top" Width="75" Click="InstallVJoyButton_Click"/>
+
+    </Grid>
+</Window>
